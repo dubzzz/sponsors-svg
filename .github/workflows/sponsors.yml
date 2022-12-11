@@ -16,3 +16,6 @@ jobs:
         run: npm ci
       - name: Build SVG image
         run: npm run build
+        env:
+          SPONSORKIT_GITHUB_TOKEN: ${{secrets.SPONSORKIT_GITHUB_TOKEN}}
+          SPONSORKIT_OPENCOLLECTIVE_KEY: ${{secrets.SPONSORKIT_OPENCOLLECTIVE_KEY}}
