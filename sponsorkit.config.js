@@ -21,12 +21,12 @@ export default defineConfig({
     {
       title: "Past Sponsors",
       monthlyDollars: -1,
-      preset: presets.xs,
+      preset: presets.base,
     },
     // Default tier
     {
       title: "Backers",
-      preset: presets.base,
+      preset: presets.medium,
     },
   ],
 });
