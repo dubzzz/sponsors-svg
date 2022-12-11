@@ -19,3 +19,11 @@ jobs:
         env:
           SPONSORKIT_GITHUB_TOKEN: ${{secrets.SPONSORKIT_GITHUB_TOKEN}}
           SPONSORKIT_OPENCOLLECTIVE_KEY: ${{secrets.SPONSORKIT_OPENCOLLECTIVE_KEY}}
+      - name: Configure GIT
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - name: Commit
+        run: git add *.svg && git commit -m "Update SVG"
+      - name: Push
+        run: git push
