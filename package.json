@@ -1,0 +1,24 @@
+{
+  "private": "true",
+  "name": "sponsors-svg",
+  "version": "1.0.0",
+  "description": "SVG file featuring sponsors of dubzzz and fast-check",
+  "main": "index.js",
+  "scripts": {
+    "build": "sponsorkit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dubzzz/sponsors-svg.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dubzzz/sponsors-svg/issues"
+  },
+  "homepage": "https://github.com/dubzzz/sponsors-svg#readme",
+  "devDependencies": {
+    "sponsorkit": "^0.6.1"
+  }
+}
