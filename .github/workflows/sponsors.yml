@@ -17,8 +17,8 @@ jobs:
       - name: Build SVG image
         run: npm run build
         env:
-          SPONSORKIT_GITHUB_TOKEN: ${{secrets.SPONSORKIT_GITHUB_TOKEN}}
-          SPONSORKIT_OPENCOLLECTIVE_KEY: ${{secrets.SPONSORKIT_OPENCOLLECTIVE_KEY}}
+          SPONSORKIT_GITHUB_TOKEN: ${{ secrets.SPONSORKIT_GITHUB_TOKEN }}
+          SPONSORKIT_OPENCOLLECTIVE_KEY: ${{ secrets.SPONSORKIT_OPENCOLLECTIVE_KEY }}
       - name: Configure GIT
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
