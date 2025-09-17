@@ -37,4 +37,5 @@ export default defineConfig({
       preset: tierPresets.xl,
     },
   ],
+  sponsorsAutoMerge: true,
 });
