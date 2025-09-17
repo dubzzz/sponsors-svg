@@ -28,6 +28,11 @@ export default defineConfig({
     },
     {
       title: 'Sponsors',
+      monthlyDollars: 5,
+      preset: presets.large,
+    },
+    {
+      title: 'Gold Sponsors',
       monthlyDollars: 50,
       preset: presets.xl,
     },
