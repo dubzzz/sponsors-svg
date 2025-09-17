@@ -17,16 +17,19 @@ export default defineConfig({
   // Tiers
   includePrivate: true,
   tiers: [
-    // Past GitHub sponsors
     {
       title: "Past Sponsors",
       monthlyDollars: -1,
       preset: presets.base,
     },
-    // Default tier
     {
       title: "Backers",
       preset: presets.medium,
+    },
+    {
+      title: 'Sponsors',
+      monthlyDollars: 50,
+      preset: presets.xl,
     },
   ],
 });
