@@ -12,7 +12,7 @@ export default defineConfig({
     slug: "fast-check",
   },
   // Rendering configs
-  width: 800,
+  width: 600,
   formats: ["svg"],
   // Tiers
   includePrivate: true,
