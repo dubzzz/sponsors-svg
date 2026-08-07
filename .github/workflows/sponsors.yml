@@ -1,29 +1,42 @@
 name: Sponsors
 on:
   workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sponsors
+  cancel-in-progress: true
 
 jobs:
-  sponsors:
-    name: "Sponsors"
+  refresh-sponsors:
+    name: Refresh sponsors image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Using Node v18.x
-        uses: actions/setup-node@v3
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js 24.x (LTS)
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: "18.x"
-      - name: Install dependencies
-        run: npm ci
-      - name: Build SVG image
+          node-version: "24.x"
+          cache: npm
+      - parallel:
+          - name: Install dependencies
+            run: npm ci
+          - name: Configure Git identity
+            run: |
+              git config --local user.email "github-actions[bot]@users.noreply.github.com"
+              git config --local user.name "github-actions[bot]"
+      - name: Render sponsors SVG
         run: npm run build
         env:
           SPONSORKIT_GITHUB_TOKEN: ${{ secrets.SPONSORKIT_GITHUB_TOKEN }}
           SPONSORKIT_OPENCOLLECTIVE_KEY: ${{ secrets.SPONSORKIT_OPENCOLLECTIVE_KEY }}
-      - name: Configure GIT
+      - name: Commit and push SVG
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-      - name: Commit
-        run: git add *.svg && git commit -m "Update SVG"
-      - name: Push
-        run: git push
+          git add '*.svg'
+          if git diff --cached --quiet; then
+            echo "Sponsors image unchanged — nothing to push."
+            exit 0
+          fi
+          git commit -m "chore: update sponsors SVG"
+          git push
