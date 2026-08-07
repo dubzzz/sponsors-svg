@@ -18,7 +18,13 @@
     "url": "https://github.com/dubzzz/sponsors-svg/issues"
   },
   "homepage": "https://github.com/dubzzz/sponsors-svg#readme",
-  "packageManager": "pnpm@10.33.0",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.20.0",
+      "onFail": "error"
+    }
+  },
   "devDependencies": {
     "sponsorkit": "^18.0.0"
   }
