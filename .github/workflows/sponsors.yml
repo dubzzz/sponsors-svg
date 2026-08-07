@@ -19,13 +19,12 @@ jobs:
         with:
           node-version: "24.x"
           cache: npm
-      - parallel:
-          - name: Install dependencies
-            run: npm ci
-          - name: Configure Git identity
-            run: |
-              git config --local user.email "github-actions[bot]@users.noreply.github.com"
-              git config --local user.name "github-actions[bot]"
+      - name: Install dependencies
+        run: npm ci
+      - name: Configure Git identity
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
       - name: Render sponsors SVG
         run: npm run build
         env:
