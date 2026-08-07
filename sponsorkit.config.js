@@ -1,34 +1,18 @@
 import { defineConfig, tierPresets } from "sponsorkit";
 
-// OpenCollective personal tokens are scoped, and sponsorkit needs the
-// "transactions" scope for its second query. If the token behind
-// SPONSORKIT_OPENCOLLECTIVE_KEY lacks a scope, retry the query anonymously:
-// the fast-check collective is public, so the data is readable without
-// authentication. Sponsorkit resolves globalThis.fetch lazily (via ofetch),
-// so wrapping it here is enough.
+// The fast-check collective is public, so everything sponsorkit needs from
+// OpenCollective (active subscriptions and current-month transactions) is
+// readable without authentication. Query the API anonymously: sponsorkit
+// insists on having *some* key, so a placeholder is set in the provider
+// config below and stripped from every request here. Sponsorkit resolves
+// globalThis.fetch lazily (via ofetch), so wrapping it here is enough.
 const realFetch = globalThis.fetch.bind(globalThis);
-globalThis.fetch = async (input, init) => {
-  const response = await realFetch(input, init);
+globalThis.fetch = (input, init) => {
   const url =
     typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
   if (!url.startsWith("https://api.opencollective.com/")) {
-    return response;
+    return realFetch(input, init);
   }
-  const payload = await response
-    .clone()
-    .json()
-    .catch(() => undefined);
-  const scopeErrors = (payload?.errors ?? []).filter((error) =>
-    /not allowed for operations in scope/.test(error?.message ?? ""),
-  );
-  if (scopeErrors.length === 0) {
-    return response;
-  }
-  console.warn(
-    `[sponsorkit.config] OpenCollective token is missing a scope (${scopeErrors
-      .map((error) => error.message)
-      .join("; ")}), retrying the query anonymously`,
-  );
   const headers = new Headers(init?.headers);
   headers.delete("Api-Key");
   return realFetch(input, { ...init, headers });
@@ -42,8 +26,9 @@ export default defineConfig({
     type: "user",
   },
   opencollective: {
-    // SPONSORKIT_OPENCOLLECTIVE_KEY, Create an API key at https://opencollective.com/applications
-    // For a personal token, grant at least the "account" and "transactions" scopes.
+    // Placeholder to satisfy sponsorkit's "key is required" check; the fetch
+    // wrapper above removes it so all queries run anonymously.
+    key: "anonymous-public-data",
     slug: "fast-check",
   },
   // Rendering configs
