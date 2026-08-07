@@ -50,7 +50,7 @@ export default defineConfig({
   width: 800,
   formats: ["svg"],
   // Tiers
-  includePrivate: true,
+  includePrivate: false,
   tiers: [
     {
       title: "Past Sponsors",
